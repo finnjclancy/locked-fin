@@ -3,15 +3,9 @@ import { NextResponse } from 'next/server';
 import path from 'path';
 import { NextRequest } from 'next/server';
 
-type RouteContext = {
-  params: {
-    id: string;
-  }
-};
-
 export async function GET(
   request: NextRequest,
-  { params }: RouteContext
+  { params }: { params: { id: string } }
 ) {
   const id = params.id;
   
@@ -40,7 +34,7 @@ export async function GET(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: RouteContext
+  { params }: { params: { id: string } }
 ) {
   const id = params.id;
   
@@ -78,7 +72,7 @@ export async function DELETE(
 
 export async function PUT(
   request: NextRequest,
-  { params }: RouteContext
+  { params }: { params: { id: string } }
 ) {
   const id = params.id;
   
