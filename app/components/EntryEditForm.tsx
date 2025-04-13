@@ -8,13 +8,15 @@ interface EntryEditFormProps {
   initialTitle: string;
   initialContent: string;
   onCancel: () => void;
+  onComplete?: () => void;
 }
 
 export default function EntryEditForm({ 
   entryId, 
   initialTitle, 
   initialContent, 
-  onCancel 
+  onCancel,
+  onComplete 
 }: EntryEditFormProps) {
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent);
@@ -42,6 +44,9 @@ export default function EntryEditForm({
 
       router.refresh();
       onCancel(); // Exit edit mode after successful update
+      if (onComplete) {
+        onComplete(); // Call additional callback if provided
+      }
     } catch (err) {
       console.error(err);
       setError('Failed to update diary entry');
@@ -53,7 +58,7 @@ export default function EntryEditForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="edit-title" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="edit-title" className="block text-sm font-medium text-black mb-1">
           Title
         </label>
         <input
@@ -61,13 +66,13 @@ export default function EntryEditForm({
           id="edit-title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 text-black"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="edit-content" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="edit-content" className="block text-sm font-medium text-black mb-1">
           Content
         </label>
         <textarea
@@ -75,27 +80,27 @@ export default function EntryEditForm({
           value={content}
           onChange={(e) => setContent(e.target.value)}
           rows={6}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 text-black"
           required
         />
       </div>
 
       {error && (
-        <div className="text-red-500 text-sm">{error}</div>
+        <div className="text-red-600 text-sm font-medium">{error}</div>
       )}
 
       <div className="flex space-x-2">
         <button
           type="submit"
           disabled={isSubmitting}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 disabled:opacity-50 font-medium"
         >
           {isSubmitting ? 'Saving...' : 'Save Changes'}
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+          className="bg-gray-200 text-black px-4 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 font-medium"
         >
           Cancel
         </button>
