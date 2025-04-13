@@ -1,8 +1,9 @@
 import { promises as fs } from 'fs';
 import { NextResponse } from 'next/server';
 import path from 'path';
+import { NextRequest } from 'next/server';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const jsonDirectory = path.join(process.cwd(), 'app/data');
     const fileContents = await fs.readFile(jsonDirectory + '/entries.json', 'utf8');
@@ -14,7 +15,7 @@ export async function GET() {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const jsonDirectory = path.join(process.cwd(), 'app/data');
     const fileContents = await fs.readFile(jsonDirectory + '/entries.json', 'utf8');

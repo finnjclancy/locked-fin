@@ -3,17 +3,17 @@ import { NextResponse } from 'next/server';
 import path from 'path';
 import { NextRequest } from 'next/server';
 
-interface RouteParams {
+type RouteContext = {
   params: {
     id: string;
-  };
-}
+  }
+};
 
 export async function GET(
   request: NextRequest,
-  context: RouteParams
+  { params }: RouteContext
 ) {
-  const id = context.params.id;
+  const id = params.id;
   
   try {
     const jsonDirectory = path.join(process.cwd(), 'app/data');
@@ -40,9 +40,9 @@ export async function GET(
 
 export async function DELETE(
   request: NextRequest,
-  context: RouteParams
+  { params }: RouteContext
 ) {
-  const id = context.params.id;
+  const id = params.id;
   
   try {
     const jsonDirectory = path.join(process.cwd(), 'app/data');
@@ -78,9 +78,9 @@ export async function DELETE(
 
 export async function PUT(
   request: NextRequest,
-  context: RouteParams
+  { params }: RouteContext
 ) {
-  const id = context.params.id;
+  const id = params.id;
   
   try {
     const jsonDirectory = path.join(process.cwd(), 'app/data');
